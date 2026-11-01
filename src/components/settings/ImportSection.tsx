@@ -74,29 +74,31 @@ export function ImportSection() {
 
   return (
     <div>
-      <label className="block">
-        <span className="sr-only">JSONファイルを選択</span>
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".json,application/json"
-          onChange={handleFileChange}
-          disabled={isImporting}
-          className="hidden"
-          id="import-file-input"
-        />
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={() => inputRef.current?.click()}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') inputRef.current?.click()
-          }}
-          className="flex min-h-11 w-full cursor-pointer items-center justify-center rounded-xl border border-red-200 text-sm font-semibold text-red-600"
-        >
-          JSONから復元する
-        </span>
-      </label>
+      {/*
+        入力を<label>で囲んで入力自体をラベル経由でも開けるようにすると、
+        下のonClickによる明示的なinput.click()と二重に発火し、iOS Safariでは
+        ファイル選択後のchangeイベントが発生しなくなる不具合があった。
+        そのため<label>は使わず、ボタン1つだけでinput.click()を呼ぶ構成にする。
+      */}
+      <input
+        ref={inputRef}
+        type="file"
+        accept=".json,application/json"
+        onChange={handleFileChange}
+        disabled={isImporting}
+        className="hidden"
+        id="import-file-input"
+        aria-hidden="true"
+        tabIndex={-1}
+      />
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={isImporting}
+        className="flex min-h-11 w-full items-center justify-center rounded-xl border border-red-200 text-sm font-semibold text-red-600 disabled:opacity-50"
+      >
+        JSONから復元する
+      </button>
 
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
       {successMessage && <p className="mt-2 text-sm text-emerald-600">{successMessage}</p>}

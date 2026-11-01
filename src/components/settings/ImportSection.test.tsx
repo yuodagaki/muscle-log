@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ImportSection } from './ImportSection'
@@ -29,6 +29,22 @@ function jsonFile(content: unknown, name = 'backup.json') {
 }
 
 describe('ImportSection', () => {
+  // iOS Safariでは、ファイル入力を<label>で囲んだ上でJSからもinput.click()を呼ぶと
+  // 二重にファイル選択が起動し、選択後のchangeイベントが発火しなくなる不具合があった
+  // （jsdom環境ではこの具体的な不具合は再現しないため、原因となる構造が無いことを確認する）。
+  it('does not wrap the file input in a <label> and triggers the picker exactly once per tap', async () => {
+    const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {})
+    const user = userEvent.setup()
+    const { container } = renderImport()
+
+    expect(container.querySelector('label')).toBeNull()
+
+    await user.click(screen.getByRole('button', { name: 'JSONから復元する' }))
+
+    expect(clickSpy).toHaveBeenCalledTimes(1)
+    clickSpy.mockRestore()
+  })
+
   it('rejects malformed JSON and keeps existing data untouched', async () => {
     await addRecord({ date: '2026-01-01', part: 'chest', reps: 5 })
     const user = userEvent.setup()
