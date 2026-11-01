@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #2563eb;
+  --color-accent-dark: #1d4ed8;
+  --color-surface: #ffffff;
+  --color-app-bg: #f8fafc;
+  --color-border-soft: #e2e8f0;
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
+
+  --color-part-chest: #f38a85;
+  --color-part-back: #709be9;
+  --color-part-shoulders: #ffc17d;
+  --color-part-arms: #76b9ed;
+  --color-part-abs: #89c98a;
+  --color-part-legs: #b49ce9;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-app-bg);
+  color: #1f2937;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
