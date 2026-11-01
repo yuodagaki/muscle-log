@@ -26,6 +26,13 @@ describe('export', () => {
   })
 })
 
+describe('fresh install state', () => {
+  it('does not report unbacked changes before any record has ever been added', async () => {
+    const meta = await getMeta()
+    expect(hasUnbackedChanges(meta)).toBe(false)
+  })
+})
+
 describe('backup confirmation', () => {
   it('only marks the backup confirmed when the user explicitly confirms, and preserves unbacked-up state for later changes', async () => {
     await addRecord({ date: '2026-11-01', part: 'chest', reps: 20 })

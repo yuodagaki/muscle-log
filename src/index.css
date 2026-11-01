@@ -40,3 +40,8 @@ body {
 .safe-top {
   padding-top: env(safe-area-inset-top, 0px);
 }
+
+.body-region-button:focus-visible {
+  outline: 3px solid #17212b;
+  outline-offset: 2px;
+}

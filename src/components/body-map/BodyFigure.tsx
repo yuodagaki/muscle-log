@@ -65,7 +65,8 @@ export function BodyFigure(props: BodyFigureProps) {
                   }
                 : undefined
             }
-            style={{ cursor: isSelect ? 'pointer' : 'default', outline: 'none' }}
+            className={isSelect ? 'body-region-button' : undefined}
+            style={{ cursor: isSelect ? 'pointer' : 'default' }}
           >
             {region.paths.map((d, index) => (
               <path

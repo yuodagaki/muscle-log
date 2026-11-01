@@ -22,6 +22,11 @@ export async function confirmBackup(snapshotRevision: number): Promise<void> {
   await db.meta.put(next)
 }
 
+/**
+ * revisionは0から始まり、記録の変更ごとに単調増加する。
+ * 一度も変更がない（revision=0）新規状態を「未バックアップ変更あり」と
+ * 誤表示しないよう、lastBackupRevisionが未確認(null)の場合の基準は0とする。
+ */
 export function hasUnbackedChanges(meta: BackupMetaRow): boolean {
-  return meta.revision > (meta.lastBackupRevision ?? -1)
+  return meta.revision > (meta.lastBackupRevision ?? 0)
 }
