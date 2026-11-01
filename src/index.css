@@ -41,7 +41,24 @@ body {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-.body-region-button:focus-visible {
-  outline: 3px solid #17212b;
+.anatomy-figure {
+  touch-action: manipulation;
+}
+
+.anatomy-figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.anatomy-figure .muscle-region {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 埋め込みSVG側のoutline:noneを上書きし、フォーカス位置を視認できるようにする。 */
+.anatomy-figure .muscle-region:focus-visible {
+  outline: 3px solid #17212b !important;
   outline-offset: 2px;
 }
