@@ -1,6 +1,6 @@
 import type { BodyPart } from '../../domain/types'
 import { BODY_PART_CATEGORY_COLORS } from '../../domain/constants'
-import { BACK_REGIONS, BODY_SILHOUETTE_PATH, BODY_VIEW_BOX, FRONT_REGIONS } from './bodyPaths'
+import { BACK_REGIONS, BODY_SILHOUETTE_PATH, BODY_VIEW_BOX, FRONT_REGIONS, HAIR_COLOR, HAIR_PATH } from './bodyPaths'
 import { heatmapColor } from './bodyColors'
 
 type SelectModeProps = {
@@ -36,6 +36,7 @@ export function BodyFigure(props: BodyFigureProps) {
       style={{ overflow: 'visible' }}
     >
       <path d={BODY_SILHOUETTE_PATH} fill="#F3F5F7" stroke="#35414C" strokeWidth={2.8} strokeLinejoin="round" />
+      <path d={HAIR_PATH} fill={HAIR_COLOR} aria-hidden="true" />
       {regions.map((region) => {
         const baseColor = BODY_PART_CATEGORY_COLORS[region.part]
         const isSelect = props.mode === 'select'
